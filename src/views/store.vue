@@ -7,13 +7,17 @@
     <p>appNameWidthVersion: {{ appNameWithVersion }}</p>
     <p>userName: {{ userName }}</p>
     <p>userName the first Letter is : {{ firstLetter }}</p>
+    <button @click="changeAppNamess">修改appName</button>
+    <p>appVersion {{ appVersion }}</p>
+    <button @click="changeUserName">修改用户名</button>
+    <button @click="callAction">调用action</button>
   </div>
 </template>
 
 <script>
 import AInput from '@/components/AInput'
 import AShow from '@/components/AShow'
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 // import { createNamespacedHelpers } from 'vuex'
 // const { mapState } = createNamespacedHelpers('user')
 export default {
@@ -28,14 +32,16 @@ export default {
     AShow
   },
   computed: {
-    ...mapState([
+    /* ...mapState([
       'appName',
-      'userName'
-    ]),
-    /* ...mapState({
+      'userName',
+      'appVersion'
+    ]), */
+    ...mapState({
       appName: state => state.appName,
-      userName: state => state.user.userName
-    }), */
+      userName: state => state.user.userName,
+      appVersion: state => state.appVersion
+    }),
     /* ...mapState({
       // appName: state => state.appName,
       userName: state => state.userName
@@ -66,6 +72,14 @@ export default {
     userName () {
       return this.$store.state.user.userName
     } */
+    /* appName: {
+      set: function (newVal) {
+        this.appName = newVal + 'new'
+      },
+      get: function () {
+        return this.appName + 'newHH'
+      }
+    }, */
     inputValueLastLetter () {
       let len = this.inputValue.length
       console.log('len', len)
@@ -74,8 +88,34 @@ export default {
   },
 
   methods: {
+    ...mapMutations([
+      'changeAppName',
+      'set_user_name'
+    ]),
     emitValue (val) {
       console.log(val)
+    },
+    changeAppNamess () {
+      // this.appName = 'new Name'
+      // this.$store.commit('changeAppName', 'sherlock holmes')
+      /* this.$store.commit({
+        type: 'changeAppName',
+        appName: 'sherlock holmes'
+      }) */
+      // this.changeAppName('sherlock holmes')
+      this.changeAppName({
+        appName: 'sherlock holmes'
+      })
+      this.$store.commit('set_app_version')
+    },
+    changeUserName () {
+      this.set_user_name('雪飘人间')
+    },
+    ...mapActions([
+      'updateAppName'
+    ]),
+    callAction () {
+      this.updateAppName()
     }
   }
 }
