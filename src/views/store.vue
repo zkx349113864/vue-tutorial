@@ -1,7 +1,10 @@
 <template>
   <div>
-    <a-input v-model="inputValue" @input="emitValue"></a-input>
-    {{ inputValue }} -> last letter is -> {{ inputValueLastLetter }}
+    <!-- <a-input v-model="inputValue" @input="emitValue"></a-input> -->
+    <!-- <a-input :value="stateValue" @input="changeStateValue"></a-input> -->
+    <a-input v-model="stateValue"></a-input>
+    <!-- {{ inputValue }} -> last letter is -> {{ inputValueLastLetter }} -->
+    <p>{{ stateValue }}</p>
     <a-show :content="inputValue"></a-show>
     <p>appName: {{ appName }}</p>
     <p>appNameWidthVersion: {{ appNameWithVersion }}</p>
@@ -44,7 +47,16 @@ export default {
       userName: state => state.user.userName,
       appVersion: state => state.appVersion,
       todoList: state => state.user.todo ? state.user.todo.todoList : []
+      // stateValue: state => state.stateValue
     }),
+    stateValue: {
+      get () {
+        return this.$store.state.stateValue
+      },
+      set (value) {
+        this.set_state_value(value)
+      }
+    },
     /* ...mapState({
       // appName: state => state.appName,
       userName: state => state.userName
@@ -93,7 +105,8 @@ export default {
   methods: {
     ...mapMutations([
       'changeAppName',
-      'set_user_name'
+      'set_user_name',
+      'set_state_value'
     ]),
     emitValue (val) {
       console.log(val)
@@ -106,6 +119,7 @@ export default {
         appName: 'sherlock holmes'
       }) */
       // this.changeAppName('sherlock holmes')
+      // this.$store.state.user.userName = 'haha'
       this.changeAppName({
         appName: 'sherlock holmes'
       })
@@ -130,6 +144,9 @@ export default {
         }
       })
     }
+    /* changeStateValue (val) {
+      this.set_state_value(val)
+    } */
   }
 }
 </script>
