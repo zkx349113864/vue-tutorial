@@ -11,7 +11,13 @@ const mutations = {
 }
 
 const actions = {
-
+  updateUserName ({ commit, state, rootState, dispatch }) {
+    // rootState.appName
+    dispatch('xxx', '')
+  },
+  xxx () {
+    //
+  }
 }
 
 export default {

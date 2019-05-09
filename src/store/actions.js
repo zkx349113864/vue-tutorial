@@ -1,7 +1,7 @@
 import { getAppName } from '@/api/app.js'
 
 const actions = {
-  updateAppName ({ commit }) {
+  /* updateAppName ({ commit }) {
     getAppName().then((res) => {
       console.log(res)
       const { info: { appName } } = res
@@ -10,6 +10,14 @@ const actions = {
     }).catch(err => {
       console.log(err)
     })
+  } */
+  async updateAppName ({ commit }) {
+    try {
+      const { info: { appName } } = await getAppName()
+      commit('changeAppName', appName)
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 

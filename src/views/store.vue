@@ -11,6 +11,8 @@
     <p>appVersion {{ appVersion }}</p>
     <button @click="changeUserName">修改用户名</button>
     <button @click="callAction">调用action</button>
+    <button @click="registerModule">动态注册模块</button>
+    <p v-for="(li, index) in todoList" :key="index">{{ li }}</p>
   </div>
 </template>
 
@@ -40,7 +42,8 @@ export default {
     ...mapState({
       appName: state => state.appName,
       userName: state => state.user.userName,
-      appVersion: state => state.appVersion
+      appVersion: state => state.appVersion,
+      todoList: state => state.user.todo ? state.user.todo.todoList : []
     }),
     /* ...mapState({
       // appName: state => state.appName,
@@ -116,6 +119,16 @@ export default {
     ]),
     callAction () {
       this.updateAppName()
+    },
+    registerModule () {
+      this.$store.registerModule(['user', 'todo'], {
+        state: {
+          todoList: [
+            '学习mutations',
+            '学习actions'
+          ]
+        }
+      })
     }
   }
 }
